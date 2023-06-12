@@ -4,26 +4,27 @@ import java.util.List;
 
 public class Solution {
     public List<String> summaryRanges(int[] nums) {
-        if(nums.length == 0) return new ArrayList<>();
+        if (nums.length == 0) return new ArrayList<>();
         List<String> result = new ArrayList<>();
+        int start = nums[0];
+        int finish = nums[0];
 
-        List<Integer> temp = new ArrayList<>();
-        temp.add(nums[0]);
-        for (int i = 1; i < nums.length ; i++) {
-            if(nums[i] - nums[i - 1] == 1){
-                temp.add(nums[i]);
-            }else {
-                if(temp.size() > 1){
-                    result.add(temp.get(0) + "->" + temp.get(temp.size() - 1));
-                }else result.add(String.valueOf(temp.get(0)));
-                temp.clear();
-                temp.add(nums[i]);
+        for (int i = 1; i < nums.length; i++) {
+            if (nums[i] - nums[i - 1] == 1) {
+                finish = nums[i];
+            } else {
+                if (start != finish) {
+                    result.add(start + "->" + finish);
+                } else result.add(String.valueOf(start));
+                start = nums[i];
+                finish = nums[i];
+
             }
         }
-        if(temp.size() == 1){
-            result.add(String.valueOf(temp.get(0)));
-        }else if(temp.size() > 1){
-            result.add(temp.get(0) + "->" + temp.get(temp.size() - 1));
+        if (start == finish) {
+            result.add(String.valueOf(start));
+        } else {
+            result.add(start + "->" + finish);
         }
         return result;
     }
